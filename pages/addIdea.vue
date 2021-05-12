@@ -18,7 +18,8 @@ export default {
     return {
       ideaformobject: {
         Subject: '',
-        Content: ''
+        Content: '',
+        Reating: 100
       }
     }
   },

@@ -11,8 +11,11 @@
     "lint": "yarn lint:js"
   },
   "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
+    "@nuxtjs/axios": "^5.13.6",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
+    "firebase": "^8.9.1",
     "nuxt": "^2.15.3",
     "sass": "^1.32.11",
     "vue-axios": "^3.2.4"

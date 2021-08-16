@@ -8,7 +8,19 @@
       <h2 class="pl-1 font-bold">Indecision</h2>
     </nuxt-link>
   </div>
-  <ul class="flex w-4/12 justify-between items-center px-4 mr-2 py-4">
+  <div v-if="$auth.loggedIn">
+      {{ $auth.user.email }}
+      <!-- username -->
+      <!-- logout button -->
+    </div>
+    <div class="flex items-center" v-else>
+      <nuxt-link  v-if="!user" class="m-2" to="/">Login</nuxt-link>
+      <nuxt-link  v-if="!user" class="m-2" to="/register">Register</nuxt-link>
+      <!-- login -->
+      <!-- register -->
+      <a v-if="user" @click="signout" class="nav-link ml-1">Signout</a>
+    </div>
+  <ul v-if="user" class="flex w-4/12 justify-between items-center px-4 mr-2 py-4">
     <li>
       <nuxt-link class="inline-block rounded w-4/12 text-green-400 py-1" to="/addIdea">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -34,7 +46,27 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth'
 export default {
-  setup() {},
+  data() {
+    return {
+      user: ''
+    }
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged( user => {
+      this.user = user;
+    })
+  },
+  methods: {
+    signout() {
+      firebase.auth().signOut().then(result => {
+        console.log(result);
+        this.user = '';
+        this.$router.push('/')
+      });
+    }
+  }
 }
 </script>

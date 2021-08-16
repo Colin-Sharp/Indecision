@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Login</h1>
-    <UserAuthForm buttonText="Login" :submitForm="loginUser"/>
+    <h1>Register</h1>
+    <UserAuthForm buttonText="Register" :submitForm="registerUser" error="error" />
   </div>
 </template>
 
@@ -16,8 +16,8 @@ import 'firebase/auth'
       }
     },
     methods: {
-      loginUser(registrationinfo) {
-        firebase.auth().signInWithEmailAndPassword(registrationinfo.email, registrationinfo.password).then(user => {
+      registerUser(registrationinfo) {
+        firebase.auth().createUserWithEmailAndPassword(registrationinfo.email, registrationinfo.password).then(user => {
           console.log(user);
           this.$router.push('/home');
         }).catch(error => {

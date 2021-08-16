@@ -13,13 +13,17 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth'
+
 export default {
   data() {
     return {
       ideaformobject: {
         Subject: '',
         Content: '',
-        Reating: 100
+        Reating: 100,
+        user: ""
       }
     }
   },
@@ -37,6 +41,13 @@ export default {
     const ideaform = document.getElementById('idea_form');
 
     ideaform.addEventListener('submit', this.submitForm)
+
+    firebase.auth().onAuthStateChanged( user => {
+    this.user = user;
+      if (!this.user) {
+          this.$router.push('/')
+      }
+    })
   }
 }
 </script>

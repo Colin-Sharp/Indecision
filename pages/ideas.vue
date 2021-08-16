@@ -1,12 +1,12 @@
 <template>
   <div class="relative cards" :style="cardPosition" @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)" @touchleave="end($event)">
-    <div :class="{'dragging': started}" @mousedown="start($event)" @mousemove="move($event)" @mouseup="end($event)" @mouseleave="end($event)" ref="ideas" v-for="(idea, index) in dummydataideas" v-bind:key="index" class="px-1 relative">
+    <div :class="{'dragging': started}" @mousedown="start($event)" @mousemove="move($event)" @mouseup="end($event)" @mouseleave="end($event)" ref="ideas" v-for="(idea, index) in ideas" v-bind:key="index" class="px-1 relative">
       <div v-if="index === currentactiveidea" class="max-w-sm rounded h-full overflow-hidden shadow-lg mx-7">
         <img class="w-full" src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9ua2V5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
         <div class="px-2 my-2">
-          <div class="font-bold text-l mb-2">{{idea.subject}}</div>
+          <div class="font-bold text-l mb-2">{{idea.fields.Subject}}</div>
           <p class="text-gray-700 text-base mb-1">
-            {{idea.description}}
+            {{idea.fields.Content}}
           </p>
         </div>
       </div>
@@ -15,7 +15,12 @@
 </template>
 
 <script>
-import axios from 'axios';
+import firebase from 'firebase/app';
+import 'firebase/auth'
+
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -35,18 +40,43 @@ export default {
       cardTop: null,
       cardrotate: 0,
       screenwidth: null,
-      screenhight: null
+      screenhight: null,
+      user: ""
     }
   },
   mounted() {
+        console.log(this.ideas);
+        if (!this.ideas) {
+          this.$store.commit('ideas/updateIdeas');
+        }
+        if (this.ideas) {
+          this.ideas.forEach(element => {
+            console.log('1', element);
+          });
+        };
+
     window.addEventListener('resize', () => {
       this.screenhight = window.outerHeight;
 			this.screenwidth = window.outerWidth;
 		});
     	this.screenwidth = window.outerWidth;
       this.screenhight = window.outerHeight;
+
+      firebase.auth().onAuthStateChanged( user => {
+      this.user = user;
+      if (!this.user) {
+          this.$router.push('/')
+      }
+    });
+
   },
   computed: {
+    ideas () {
+      return this.$store.state.ideas.list
+    },
+    ...mapGetters([
+      'ideas'
+    ]),
     cardPosition() {
       if (this.started) {
         return {left: this.cardLeft + 'px', top: this.cardTop + 'px', transform: 'rotate(' + this.cardrotate + 'deg)'}
@@ -117,13 +147,13 @@ export default {
           return;
         }
       }
-    }
+    },
+    ...mapActions([
+      'updateIdeas'
+    ]),
   },
   created() {
-    axios.get('https://api.airtable.com/v0/appAZxQ29dzBN2Y7Z/Ideas', 
-    { headers: {
-      'Authorization': 'Bearer key6tp3efXcR6WKgb'
-    }}).then(response => console.log(response))
+    this.$store.commit('ideas/updateIdeas');
   }
 }
 </script>
@@ -133,4 +163,3 @@ export default {
   transition: transform 0.5s ease-out;
 }
 </style>
-

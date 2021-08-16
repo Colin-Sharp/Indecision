@@ -1,4 +1,6 @@
 export default {
+  auth: '/home',
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -20,7 +22,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/firebase.js'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -34,7 +38,17 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
+  ],
+
+  /*
+   ** Axios module configuration
+   */
+   axios: {
+    baseURL: 'http://localhost:3000/api',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}

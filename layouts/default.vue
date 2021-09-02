@@ -1,11 +1,18 @@
 <template>
   <div>
-    <Header />
-    <Nuxt />
+    <div class="flxed flex justify-center">
+      <div class="sm:mt-20 container">
+        <Header />
+        <Nuxt />
+      </div>
+    </div>
+    <div class="flex justify-center w-full hidden phone-wrapper sm:flex absolute top-5">
+      <img class="phone" src="../static/phone.png" alt="">
+    </div>  
   </div>
 </template>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -53,8 +60,19 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+.phone-wrapper {
+  z-index: -10;
+}
+
+.phone {
+  min-width: 400px;
+}
 
 body {
   background: rgb(231, 226, 226);
+}
+
+.container {
+  max-width: 420px;
 }
 </style>

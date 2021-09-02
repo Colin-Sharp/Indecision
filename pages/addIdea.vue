@@ -19,31 +19,39 @@ import 'firebase/auth'
 export default {
   data() {
     return {
-      ideaformobject: {
-        Subject: '',
-        Content: '',
-        Reating: 100,
-        user: ""
-      }
+      user: null
     }
   },
   methods: {
     submitForm(e) {
       const subject = document.querySelector('input[name=subject]');
       const content = document.querySelector('textarea[name=content]');
-      this.ideaformobject.Subject = subject.value;
-      this.ideaformobject.Content = content.value;
-      console.log(this.ideaformobject);
+      const ideaobject = 
+      { "records": 
+        [ 
+          {
+            "fields": {
+              "Subject": subject.value,
+              "Content": content.value,
+              "Rating": 100,
+              "id": this.user.uid,
+              "email": this.user.email
+            }
+          }
+        ]
+      };
+      this.$store.dispatch('createIdea', ideaobject);
       e.preventDefault();
     }
   },
   mounted() {
     const ideaform = document.getElementById('idea_form');
-
+    console.log(this.$store);
     ideaform.addEventListener('submit', this.submitForm)
 
     firebase.auth().onAuthStateChanged( user => {
-    this.user = user;
+      this.user = user;
+    console.log(this.user);
       if (!this.user) {
           this.$router.push('/')
       }

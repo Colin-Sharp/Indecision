@@ -1,5 +1,4 @@
 export default {
-  auth: '/home',
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -39,8 +38,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/axios'
   ],
 
   /*

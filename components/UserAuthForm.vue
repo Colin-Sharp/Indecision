@@ -1,4 +1,5 @@
 <template>
+<div>
   <form @submit.prevent="submitForm(userInfo)" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mx-2 mb-4 flex flex-col">
     <div v-if="hasName" class="mb-4">
       <label class="block text-grey-darker text-sm font-bold mb-2" for="name">
@@ -24,7 +25,8 @@
         {{ buttonText }}
       </button>
     </div>
-</form>
+  </form>
+</div>
 </template>
 
 <script>
@@ -33,8 +35,9 @@ export default {
     return {
       showPassword: false,
       userInfo: {
-        email: 'colin@gmail.com',
-        password: 'sadsosad12345'
+        email: '',
+        password: '',
+        name: ''
       }
     }
   },

@@ -1,6 +1,8 @@
 <template>
+<div>
   <div class="relative cards" :style="cardPosition" @touchstart="start($event)" @touchmove="move($event)" @touchend="end($event)" @touchleave="end($event)">
-    <div :class="{'dragging': started}" @mousedown="start($event)" @mousemove="move($event)" @mouseup="end($event)" @mouseleave="end($event)" ref="ideas" v-for="(idea, index) in ideas" v-bind:key="index" class="px-1 relative">
+    <div :class="{'dragging': started}" @mousedown="start($event)" @mousemove="move($event)" @mouseup="end($event)" @mouseleave="end($event)" ref="ideas" 
+    v-for="(idea, index) in ideas" v-bind:key="index" class="px-1 relative">
       <div v-if="index === currentactiveidea" class="max-w-sm rounded h-full overflow-hidden shadow-lg mx-7">
         <img class="w-full" src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9ua2V5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
         <div class="px-2 my-2">
@@ -12,21 +14,17 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import firebase from 'firebase/app';
 import 'firebase/auth'
-
-import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      dummydataideas: [{ subject: 'Subject1', references: ['ref 1', 'ref 2', 'ref 3'], description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'},
-      { subject: 'Subject2', references: ['ref 1', 'ref 2', 'ref 3'], description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'},
-      { subject: 'Subject3', references: ['ref 1', 'ref 2', 'ref 3'], description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}],
       currentactiveidea: 0,
       started: false,
       moved: false,
@@ -44,17 +42,13 @@ export default {
       user: ""
     }
   },
+  async fetch({store}) {
+    await store.dispatch('loadAllIdeas')
+  },
   mounted() {
-        console.log(this.ideas);
-        if (!this.ideas) {
-          this.$store.commit('ideas/updateIdeas');
-        }
-        if (this.ideas) {
-          this.ideas.forEach(element => {
-            console.log('1', element);
-          });
-        };
-
+    setTimeout(() => {
+      this.$store.dispatch('loadAllIdeas');
+    }, 0)
     window.addEventListener('resize', () => {
       this.screenhight = window.outerHeight;
 			this.screenwidth = window.outerWidth;
@@ -71,12 +65,9 @@ export default {
 
   },
   computed: {
-    ideas () {
-      return this.$store.state.ideas.list
-    },
-    ...mapGetters([
-      'ideas'
-    ]),
+    ...mapState({
+      ideas: state => state.ideas 
+    }),
     cardPosition() {
       if (this.started) {
         return {left: this.cardLeft + 'px', top: this.cardTop + 'px', transform: 'rotate(' + this.cardrotate + 'deg)'}
@@ -148,12 +139,8 @@ export default {
         }
       }
     },
-    ...mapActions([
-      'updateIdeas'
-    ]),
   },
   created() {
-    this.$store.commit('ideas/updateIdeas');
   }
 }
 </script>

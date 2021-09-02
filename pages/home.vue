@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-2">
+    <div class="p-2 relative">
       <div ref="cards" class="flex flex-wrap justify-between cards">
         <div :style="getCardPosition" v-on:click="handleCards(0, $event)" class="p-1 w-6/12 card">
           <div class="max-w-sm rounded h-full overflow-hidden shadow-lg">
@@ -71,7 +71,7 @@
     <div class="flex w-full justify-end mt-4">
       <nuxt-link to="/addIdea"><div v-if="!cardisselected" class="circle-button bg-green-500 mb-1 mr-4"></div></nuxt-link>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -184,6 +184,7 @@ export default {
 }
 .card.position {
   position: absolute;
+  
   z-index: 100;
 }
 .circle-button {

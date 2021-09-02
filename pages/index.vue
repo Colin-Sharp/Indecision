@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Login</h1>
     <UserAuthForm buttonText="Login" :submitForm="loginUser"/>
   </div>
 </template>
@@ -12,7 +11,8 @@ import 'firebase/auth'
   export default {
     data() {
       return {
-        error: ''
+        error: '',
+        user: ''
       }
     },
     methods: {
@@ -24,7 +24,18 @@ import 'firebase/auth'
           this.errors = error;
         })
       },
-    }
+    },
+    mounted() {
+        firebase.auth().onAuthStateChanged( user => {
+        this.user = user;
+        if (this.user) {
+            this.$router.push('/home')
+        }
+      })
+    },
+    async fetch({store}) {
+    await store.dispatch('loadAllIdeas')
+  },
   }
 </script>
 

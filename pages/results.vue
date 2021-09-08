@@ -1,10 +1,13 @@
 <template>
 <div>
-  <h1>This is the results</h1>
+  <div class="flex flex-col" v-for="(idea, index) in ideas" v-bind:key="index">
+    <p>{{idea.fields.Subject}} {{idea.fields.Rating}}</p>
+  </div>
 </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import firebase from 'firebase/app';
 import 'firebase/auth'
 
@@ -21,6 +24,11 @@ export default {
           this.$router.push('/')
       }
     })
+  },
+  computed: {
+     ...mapState({
+      ideas: state => state.ideas 
+    }),
   }
 }
 </script>

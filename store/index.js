@@ -1,8 +1,6 @@
 var apiKey = 'keyHWvShVlxbfFwBq';
 var baseUrl = 'https://api.airtable.com/v0/appAZxQ29dzBN2Y7Z/'
-var headers = { headers: { 'Authorization': 'Bearer ' + apiKey } }
-var headerspost = {headers: {'Authorization': 'Bearer ' + apiKey, 
-'Content-Type': 'application/json' }}
+var headers = {headers: {'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' }}
 
 export const state = () => ({
   ideas: []
@@ -11,20 +9,35 @@ export const state = () => ({
 export const mutations = {
   SET_IDEAS (state, ideas) {
     state.ideas = ideas
-  }
+  },
 }
 
 export const actions = {
   async loadAllIdeas({commit}) {
     this.$axios.get(baseUrl + 'Ideas', headers).then(response => response).then((data) => {
       const updateIdeas = data.data.records;
-      commit('SET_IDEAS', updateIdeas)
+      console.log(updateIdeas);
+      commit('SET_IDEAS', updateIdeas);
     });
   },
-  async createIdea({commit}, idea) {
-    console.log('store: ', idea);
-    this.$axios.post(baseUrl + 'Ideas', idea, headerspost).then(response => response).then((data) => {
-      console.log(data);
+  async createIdea({dispatch}, idea) {
+    this.$axios.post(baseUrl + 'Ideas', idea, headers).then(response => response).then(() => {
+      dispatch('loadAllIdeas');
     })
-  }
+  },
+  async updateIdea({dispatch}, idea) {
+    this.$axios.patch(baseUrl + 'Ideas', idea, headers).then(response => response).then(() => {
+      dispatch('loadAllIdeas');
+    })
+  },
+  async deleteIdea({dispatch}, id) {
+    this.$axios.delete(baseUrl + 'Ideas/' + id, headers).then(response => response).then(() => {
+      dispatch('loadAllIdeas');
+    })
+  },
+  async editIdea({dispatch}, idea) {
+    this.$axios.put(baseUrl + 'Ideas', idea, headers).then(response => response).then(() => {
+      dispatch('loadAllIdeas');
+    })
+  },
 }

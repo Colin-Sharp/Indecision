@@ -7,7 +7,7 @@
             <img class="w-full" src="https://images.unsplash.com/photo-1445583934509-4ad5ffe6ef08?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fHRoaW5raW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sunset in the mountains">
             <div class="px-2 my-2">
               <div class="font-bold text-l mb-2">Add Your Idea</div>
-              <p class="text-gray-700 text-base mb-1">
+              <p class="text-gray-700 sm:text-white text-base mb-1">
                 Let everyone know your idea!
               </p>
             </div>
@@ -23,7 +23,7 @@
             <img class="w-full" src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aWRlYXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
             <div class="px-2 my-2">
               <div class="font-bold text-l mb-2">View Ideas</div>
-              <p class="text-gray-700 text-base mb-1">
+              <p class="text-gray-700 sm:text-white text-base mb-1">
                 Checkout all the idea.
               </p>
             </div>
@@ -39,8 +39,8 @@
             <img class="w-full" src="https://images.unsplash.com/photo-1591696205602-2f950c417cb9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Z3JhcGh8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sunset in the mountains">
             <div class="px-2 my-2">
               <div class="font-bold text-l mb-2">View results</div>
-              <p class="text-gray-700 text-base mb-1">
-                See what idea were loved.
+              <p class="text-gray-700 sm:text-white text-base mb-1">
+                See what idea were loved
               </p>
             </div>
             <nuxt-link v-if="displayfull && currentselectedcardindex === 2" to="/results">
@@ -55,15 +55,15 @@
             <img class="w-full" src="https://images.unsplash.com/photo-1515325595179-59cd5262ca53?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aGlzdG9yeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
             <div class="px-2 my-2">
               <div class="font-bold text-l mb-2">About</div>
-              <p class="text-gray-700 text-base mb-1">
-                Lorem ipsum dolor sit.
+              <p class="text-gray-700 sm:text-white text-base mb-1">
+                See your ideas and edit them if you want
               </p>
             </div>
-            <!-- <nuxt-link v-if="displayfull && currentselectedcardindex === 3" to="/addIdea">
+            <nuxt-link v-if="displayfull && currentselectedcardindex === 3" to="/yourIdeas">
               <button class="bg-white text-green-400 py-1 px-4 border border-green-400 rounded shadow take-me-there">
                 Take me there
               </button>
-            </nuxt-link> -->
+            </nuxt-link>
           </div>
         </div>
       </div>

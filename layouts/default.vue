@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="flxed flex justify-center">
-      <div class="sm:mt-20 container">
+      <div class="sm:mt-32 container">
+        <Phoneheader />
         <Header />
         <Nuxt />
       </div>
     </div>
-    <div class="flex justify-center w-full hidden phone-wrapper sm:flex absolute top-5">
+    <div class="flex justify-center w-full hidden phone-wrapper sm:flex absolute top-0">
       <img class="phone" src="../static/phone.png" alt="">
     </div>  
   </div>
@@ -65,7 +66,7 @@ html {
 }
 
 .phone {
-  min-width: 400px;
+  min-width: 680px;
 }
 
 body {
@@ -73,6 +74,23 @@ body {
 }
 
 .container {
-  max-width: 420px;
+  max-width: 320px;
+}
+
+button:active,
+button:focus {
+  outline: none;
+}
+
+.container-phone {
+  max-width: 380px;
 }
 </style>
+
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch('loadAllIdeas');
+  },
+}
+</script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-center text-lg text-green-400 bg-white font-bold my-4">
+    <div class="flex justify-center text-lg text-green-400 font-bold my-4">
       <h1>Register</h1>
     </div>
     <UserAuthForm buttonText="Register" :submitForm="registerUser" error="error" :hasName="true"/>

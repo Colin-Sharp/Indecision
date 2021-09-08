@@ -18,13 +18,11 @@
         Password
       </label>
       <input v-model="userInfo.password" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" placeholder="******************">
-      <p class="text-red text-xs italic">Please choose a password.</p>
+      <p v-if="hasName" class="text-red text-xs italic">Please choose a password.</p>
     </div>
-    <div class="flex items-center justify-between">
-      <button type="submit" class="bg-blue hover:bg-blue-dark font-bold py-2 px-4 rounded">
-        {{ buttonText }}
-      </button>
-    </div>
+    <button type="submit" class="bg-green-300 hover:bg-green-400 font-bold py-2 px-4 rounded text-white">
+      {{ buttonText }}
+    </button>
   </form>
 </div>
 </template>

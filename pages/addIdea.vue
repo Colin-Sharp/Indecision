@@ -42,16 +42,18 @@ export default {
       };
       this.$store.dispatch('createIdea', ideaobject);
       e.preventDefault();
+      subject.value = '';
+      content.value = '';
+      // Update our ideas
+      // this.$store.dispatch('loadAllIdeas');
     }
   },
   mounted() {
     const ideaform = document.getElementById('idea_form');
-    console.log(this.$store);
     ideaform.addEventListener('submit', this.submitForm)
 
     firebase.auth().onAuthStateChanged( user => {
       this.user = user;
-    console.log(this.user);
       if (!this.user) {
           this.$router.push('/')
       }

@@ -19,13 +19,17 @@ import 'firebase/auth'
       }
     },
     methods: {
-      loginUser(registrationinfo) {
-        firebase.auth().signInWithEmailAndPassword(registrationinfo.email, registrationinfo.password).then(user => {
-          console.log(user);
-          this.$router.push('/home');
-        }).catch(error => {
-          this.errors = error;
-        })
+      loginUser(registrationinfo, invalid) {
+        if (!invalid) {
+          firebase.auth().signInWithEmailAndPassword(registrationinfo.email, registrationinfo.password).then(user => {
+            console.log(user);
+            this.$router.push('/home');
+          }).catch(error => {
+            this.errors = error;
+          })
+        } else {
+          console.log('hey this is not valid yet!!');
+        }
       },
     },
     mounted() {

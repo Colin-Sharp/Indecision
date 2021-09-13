@@ -10,7 +10,7 @@
         </button>
         <img class="w-full" src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9ua2V5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
         <div class="px-2 my-2">
-          <div class="font-bold text-l mb-2">{{idea.fields.Subject}}</div>
+          <div class="font-bold text-l sm:text-white mb-2">{{idea.fields.Subject}}</div>
           <p class="text-gray-700 sm:text-white text-base mb-1">
             {{idea.fields.Content}}
           </p>

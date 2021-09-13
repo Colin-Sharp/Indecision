@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flxed flex justify-center">
-      <div class="sm:mt-32 container">
+    <div class="wrapper flxed flex justify-center">
+      <div class="sm:mt-28 container">
         <Phoneheader />
         <Header />
         <Nuxt />
@@ -75,6 +75,18 @@ body {
 
 .container {
   max-width: 320px;
+   @media only screen and (min-width: 577px) {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+   }
+}
+
+.container::-webkit-scrollbar {
+   @media only screen and (min-width: 577px) {
+    display: none;
+   }
 }
 
 button:active,
@@ -84,6 +96,13 @@ button:focus {
 
 .container-phone {
   max-width: 380px;
+}
+
+.wrapper {
+  @media only screen and (min-width: 577px) {
+    max-height: 754px;
+    overflow: hidden;
+  }
 }
 </style>
 

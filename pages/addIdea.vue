@@ -1,14 +1,14 @@
 <template>
   <form id="idea_form" action="post" class="w-full max-w-lg p-4">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+    <label class="block uppercase tracking-wide sm:text-white text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
         Subject
     </label>
-    <input name="subject" class="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Subject">
-    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+    <input name="subject" class="appearance-none leading-4 block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4  mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Subject">
+    <label class="block uppercase sm:text-white tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
         Whats your idea?)
     </label>
     <textarea name="content" id="" cols="30" rows="10" class="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"></textarea>
-    <button type="submit" class="w-full bg-green-400 border rounded p-1 text-white">Face jugment</button>
+    <button type="submit" class="w-full bg-green-300 hover:bg-green-400 rounded p-1 font-bold text-white">Share your Idea</button>
   </form>
 </template>
 
@@ -45,7 +45,7 @@ export default {
       subject.value = '';
       content.value = '';
       // Update our ideas
-      // this.$store.dispatch('loadAllIdeas');
+      this.$store.dispatch('loadAllIdeas');
     }
   },
   mounted() {

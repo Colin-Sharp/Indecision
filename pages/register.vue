@@ -22,7 +22,6 @@ import 'firebase/auth'
     methods: {
       registerUser(registrationinfo) {
         firebase.auth().createUserWithEmailAndPassword( registrationinfo.email, registrationinfo.password).then(user => {
-          console.log(user);
           this.$router.push('/home');
         }).catch(error => {
           this.errors = error;

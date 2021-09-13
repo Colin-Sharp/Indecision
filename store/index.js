@@ -16,7 +16,6 @@ export const actions = {
   async loadAllIdeas({commit}) {
     this.$axios.get(baseUrl + 'Ideas', headers).then(response => response).then((data) => {
       const updateIdeas = data.data.records;
-      console.log(updateIdeas);
       commit('SET_IDEAS', updateIdeas);
     });
   },

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="flex justify-center text-lg text-green-400 font-bold my-4">
+      <h1>Login</h1>
+    </div>
     <UserAuthForm buttonText="Login" :submitForm="loginUser"/>
   </div>
 </template>

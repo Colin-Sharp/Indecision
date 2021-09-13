@@ -1,19 +1,17 @@
 <template>
-  <div class="flex justify-between container mx-1 sm:mx-0">
+  <div class="flex justify-between container mx-1">
     <div class="flex justify-start items-center">
-      <nuxt-link class="inline-block rounded text-green-500 logo flex" to="/home">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h2 class="pl-1 font-bold">Indecision</h2>
+      <nuxt-link v-if="user" to="/home">
+        <h2 class="font-bold text-green-500 font-bold logo">Indecision</h2>
       </nuxt-link>
+      <h2 v-else class="font-bold text-green-500 font-bold logo">Indecision</h2>
     </div>
-      <div class="flex justify-center font-bold py-4">
+      <div class="flex justify-center font-bold py-4 sm:py-1">
         <nuxt-link  v-if="!user && $nuxt.$route.path !== '/'" class="m-2 text-green-400 font-bold" to="/">Login</nuxt-link>
         <nuxt-link  v-if="!user && $nuxt.$route.path !== '/register'" class="m-2 text-green-400 font-bold" to="/register">Register</nuxt-link>
-        <a v-if="user" @click="signout" class="nav-link ml-1 cursor-pointer text-green-400 my-5">Signout</a>
+        <a v-if="user" @click="signout" class="nav-link ml-1 cursor-pointer text-green-400 my-5 sm:my-2">Signout</a>
       </div>
-    <ul v-if="user" class="flex w-4/12 justify-between items-center py-4">
+    <ul v-if="user" class="flex w-4/12 justify-between items-center py-4 mr-1 sm:py-1">
       <li>
         <nuxt-link class="inline-block rounded w-4/12 text-green-400 py-1" to="/addIdea">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,4 +69,7 @@ export default {
 </script>
 
 <style lang="scss">
+.logo {
+  font-family: 'Pacifico', cursive;
+}
 </style>

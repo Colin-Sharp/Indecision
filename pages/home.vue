@@ -40,7 +40,7 @@
             <div class="px-2 my-2">
               <div class="font-bold text-l mb-2">View results</div>
               <p class="text-gray-700 sm:text-white text-base mb-1">
-                See what idea were loved
+                See what ideas were loved
               </p>
             </div>
             <nuxt-link v-if="displayfull && currentselectedcardindex === 2" to="/results">

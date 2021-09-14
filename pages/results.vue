@@ -2,9 +2,11 @@
 <div>
   <div class="flex flex-col" v-for="(idea, index) in ideas" v-bind:key="index">
     <div class="result-wrapper flex justify-between w-full">
-      <p @click="getRatings()" class="font-bold name sm:text-gray-300">{{idea.fields.Subject}} {{Math.round(percentratings[index] / 15)}}%</p>
+      <p @click="getRatings()" class="font-bold name sm:text-gray-300">{{idea.fields.Subject}} {{!!percentratings.length ? Math.round(percentratings[index] / 15) : '--'}}%</p>
       <div :style="{width: percentratings.length ? percentratings[index] + 'px' : 'inherit'}" class="bar-chart my-1 bg-green-400 sm:bg-green-500"></div>
-      <button class="sm:border-white text-green-600 font-bold sm:text-gray-400 p-2">View</button>
+      <nuxt-link :to="{name: 'idea', params: {id: idea.id}}">
+        <button class="sm:border-white text-green-600 font-bold sm:text-gray-400 p-2">View</button>
+      </nuxt-link>
     </div>
   </div>
 </div>
@@ -38,16 +40,24 @@ export default {
       ideas: state => state.ideas 
     }),
   },
+  watch: {
+    percentratings() {
+      if (!this.percentratings.length) {
+        this.getRatings();
+      }
+    }
+  },
   methods: {
     getRatings() {
       const results = [...this.ideas];
+      // set initial percent value
+      results.forEach(()=> this.percentratings.push(100))
       
       const ratings = []
       const ratingpercent = [];
       results.forEach(result => ratings.push(parseInt(result.fields.Rating)))
       const totalratings = ratings.reduce((accumlator, currentValuse) =>  accumlator + currentValuse, 0)
       ratings.forEach(rating => {ratingpercent.push((100 / (totalratings / rating)) * 15)});
-      console.log(results, totalratings, ratingpercent );
       this.percentratings = ratingpercent;
     }
   }

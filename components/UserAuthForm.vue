@@ -12,27 +12,34 @@
         Your email
       </label>
       <input v-model="userInfo.email" 
+            :class="{'error': $v.email.$error}"
              class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" 
              id="email" 
              type="text" 
              placeholder="email"
              @input="setEmail($event.target.value)">
+      <div class="text-red-500" v-if="!$v.email.required">You need to enter your email</div>
+      <div class="text-red-500" v-if="!$v.email.email">Please enter a valid email</div>
     </div>
     <div class="mb-6">
       <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
         Password
       </label>
-      <input v-model="userInfo.password" 
+      <input v-model="userInfo.password"
+            :class="{'error': $v.password.$error}" 
              class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" 
              id="password" 
              type="password" 
              placeholder="******************"
              @input="setPassword($event.target.value)">
+      <div class="text-red-500" v-if="!$v.password.required">You have to enter a your password</div>
+      <div class="text-red-500" v-if="!$v.password.minLength">Password must have at least {{$v.password.$params.minLength.min}} letters.</div>
       <p v-if="hasName" class="text-green-800 text-xs italic">Please choose a password.</p>
       <nuxt-link v-else to="/register" >
         <button class="text-green-800 text-xs italic">Have you register?</button>
       </nuxt-link>
     </div>
+    <p class="text-red-500">{{error}}</p>
     <button type="submit" class="bg-green-300 hover:bg-green-400 font-bold py-2 px-4 rounded text-white">
       {{ buttonText }}
     </button>
@@ -71,17 +78,27 @@ export default {
     setEmail(value) {
       this.email = value;
       this.$v.email.$touch()
-      console.log(this.$v);
-      this.invalid = this.$v.invalid;
     },
     setPassword(value) {
       this.password = value;
       this.$v.password.$touch()
-      this.invalid = this.$v.invalid;
     }
   },
   mounted() {
-    this.invalid = this.$v.invalid;
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.error {
+  animation: shake 0.2s ease-in-out 0s 2;
+  border: 2px solid red;
+}
+
+@keyframes shake {
+  0% { margin-left: 0rem; }
+  25% { margin-left: 0.5rem; }
+  75% { margin-left: -0.5rem; }
+  100% { margin-left: 0rem; }
+}
+</style>

@@ -3,7 +3,7 @@
     <div class="flex justify-center text-lg text-green-400 font-bold my-4">
       <h1>Login</h1>
     </div>
-    <UserAuthForm buttonText="Login" :submitForm="loginUser"/>
+    <UserAuthForm :error="error"  buttonText="Login" :submitForm="loginUser"/>
   </div>
 </template>
 
@@ -22,13 +22,10 @@ import 'firebase/auth'
       loginUser(registrationinfo, invalid) {
         if (!invalid) {
           firebase.auth().signInWithEmailAndPassword(registrationinfo.email, registrationinfo.password).then(user => {
-            console.log(user);
             this.$router.push('/home');
           }).catch(error => {
-            this.errors = error;
+            this.error = error;
           })
-        } else {
-          console.log('hey this is not valid yet!!');
         }
       },
     },

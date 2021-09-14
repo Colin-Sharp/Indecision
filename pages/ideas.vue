@@ -2,7 +2,7 @@
 <div class="mb-2">
   <div class="relative cards">
     <div ref="ideas" v-for="(idea, index) in ideas" v-bind:key="index" class="px-1 relative">
-      <div v-if="index === currentactiveidea" class="max-w-sm rounded h-full overflow-hidden shadow-lg sm:boader mx-7">
+      <div v-if="index === currentactiveidea && !idea.fields.voted.includes(user.uid)" class="max-w-sm rounded h-full overflow-hidden shadow-lg sm:boader mx-7">
         <img class="w-full" src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW9ua2V5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
         <div class="px-2 my-2">
           <div class="font-bold sm:text-white text-l mb-2">{{idea.fields.Subject}}</div>
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="sm:text-white">
+  <div v-if="checkIfWeHaveAnyIdeas" class="sm:text-white">
     <div class="needle-wrapper w-full flex flex-col items-center mt-20 justify-center mb-4">
       <span class="p-4 rating-percent">{{Math.round((slidervalue / 180) * 100)}}%</span> 
       <div ref="indectors" class="indectors w-12/12">
@@ -44,6 +44,9 @@
       <input name="slider" min="0" max="180" id="slider_range" ref="slider" value="50" v-model="slidervalue" class="w-full slider" type="range">
     </div>
   </div>
+  <div v-if="!checkIfWeHaveAnyIdeas" class="flex justify-center">
+      <p class="font-bold sm:text-white">Hey, looks like you have voted on all the ideas out there right now. Why don't you mossy on to the add idea page and <nuxt-link to="/addIdea" class="underline hover:text-green-400">add an idea.</nuxt-link> </p>
+    </div>
 </div>
 </template>
 
@@ -56,28 +59,12 @@ export default {
   data() {
     return {
       currentactiveidea: 0,
-      screenwidth: null,
-      screenhight: null,
       user: "",
       slidervalue: 90
     }
   },
-  async fetch({store}) {
-    await store.dispatch('loadAllIdeas')
-  },
   watch: {},
   mounted() {
-    setTimeout(() => {
-      this.$store.dispatch('loadAllIdeas');
-    }, 0)
-
-    window.addEventListener('resize', () => {
-      this.screenhight = window.outerHeight;
-			this.screenwidth = window.outerWidth;
-		});
-    	this.screenwidth = window.outerWidth;
-      this.screenhight = window.outerHeight;
-
       firebase.auth().onAuthStateChanged( user => {
       this.user = user;
       if (!this.user) {
@@ -92,6 +79,9 @@ export default {
     }),
     getGaugeRotation() {
       return {transform: 'rotate(' + this.slidervalue +'deg)'}
+    },
+    checkIfWeHaveAnyIdeas() {
+      return this.ideas.filter(idea => !idea.fields.voted.includes(this.user.uid)).length
     }
   },
   watch: {
@@ -108,6 +98,7 @@ export default {
             "id": this.ideas[this.currentactiveidea].id,
             "fields": {
               "Rating": parseInt(this.ideas[this.currentactiveidea].fields.Rating) + parseInt(this.slidervalue),
+              "voted": this.ideas[this.currentactiveidea].fields.voted + '-' + this.user.uid
             }
           }
         ]
@@ -120,14 +111,16 @@ export default {
       }
     },
     setIndecators() {
-      const indectors = [...this.$refs.indectors.children];
-      indectors.forEach((indector, index) => {
-        if (index <= (this.slidervalue / 10) || this.slidervalue == 179) {
-          indector.classList.add("green");
-        } else {
-           indector.classList.remove("green");
-        }
-      })
+      if (this.checkIfWeHaveAnyIdeas) {
+        const indectors = [...this.$refs.indectors.children];
+        indectors.forEach((indector, index) => {
+          if (index <= (this.slidervalue / 10) || this.slidervalue == 179) {
+            indector.classList.add("green");
+          } else {
+             indector.classList.remove("green");
+          }
+        })
+      }
     }
   },
   created() {

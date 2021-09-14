@@ -35,7 +35,8 @@ export default {
               "Content": content.value,
               "Rating": 100,
               "id": this.user.uid,
-              "email": this.user.email
+              "email": this.user.email,
+              "voted": this.user.uid
             }
           }
         ]

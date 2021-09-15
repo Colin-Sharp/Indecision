@@ -18,8 +18,8 @@
              type="text" 
              placeholder="email"
              @input="setEmail($event.target.value)">
-      <div class="text-red-500" v-if="!$v.email.required">You need to enter your email</div>
-      <div class="text-red-500" v-if="!$v.email.email">Please enter a valid email</div>
+      <div class="text-red-500" v-if="!$v.email.required && $v.email.$touch">You need to enter your email</div>
+      <div class="text-red-500" v-if="!$v.email.email && $v.email.$touch">Please enter a valid email</div>
     </div>
     <div class="mb-6">
       <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
@@ -32,8 +32,8 @@
              type="password" 
              placeholder="******************"
              @input="setPassword($event.target.value)">
-      <div class="text-red-500" v-if="!$v.password.required">You have to enter a your password</div>
-      <div class="text-red-500" v-if="!$v.password.minLength">Password must have at least {{$v.password.$params.minLength.min}} letters.</div>
+      <div class="text-red-500" v-if="!$v.password.required && $v.password.$touch">You have to enter a your password</div>
+      <div class="text-red-500" v-if="!$v.password.minLength && $v.password.$touch">Password must have at least {{$v.password.$params.minLength.min}} letters.</div>
       <p v-if="hasName" class="text-green-800 text-xs italic">Please choose a password.</p>
       <nuxt-link v-else to="/register" >
         <button class="text-green-800 text-xs italic">Have you register?</button>

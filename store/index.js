@@ -1,5 +1,5 @@
-var apiKey = 'keyHWvShVlxbfFwBq';
-var baseUrl = 'https://api.airtable.com/v0/appAZxQ29dzBN2Y7Z/'
+var apiKey = process.env.API_KEY;
+var baseUrl = process.env.API_URL
 var headers = {headers: {'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' }}
 
 export const state = () => ({

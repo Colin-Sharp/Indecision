@@ -1,6 +1,6 @@
 var apiKey = process.env.API_KEY;
 var baseUrl = process.env.API_URL
-var headers = {headers: {'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' }}
+var headers = {headers: {'Authorization': 'Bearer ' + process.env.API_KEY, 'Content-Type': 'application/json' }}
 
 export const state = () => ({
   ideas: []
